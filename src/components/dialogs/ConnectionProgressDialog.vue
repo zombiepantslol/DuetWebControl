@@ -17,8 +17,7 @@
 					</CodeButton>
 				</div>
 
-				<div v-else-if="isUpdating"
-					 class="d-flex flex-column mt-3">
+				<div v-else-if="isUpdating" class="d-flex flex-column mt-3">
 					<span class="mb-1">
 						{{ $tc("dialog.connectionProgress.boardUpdateMessage", machineStore.boardsBeingUpdated.length) }}
 					</span>

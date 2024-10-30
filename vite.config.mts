@@ -13,6 +13,38 @@ import { fileURLToPath, URL } from 'node:url'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  build: {
+		chunkSizeWarningLimit: 5000000,
+		rollupOptions: {
+			output: {
+				chunkFileNames: "js/[name]-[hash].js",
+				entryFileNames: "js/[name]-[hash].js",
+
+				assetFileNames: ({ name }) => {
+					if (name) {
+						if (/\.css$/.test(name)) {
+							return "css/[name]-[hash][extname]";
+						}
+						if (/\.(woff|woff2|ttf)$/.test(name)) {
+							return "fonts/[name]-[hash][extname]";
+						}
+						if (/\.(gif|jpe?g|png|svg)$/.test(name)) {
+							return "img/[name]-[hash][extname]";
+						}
+					}
+					
+					// default value
+					// ref: https://rollupjs.org/guide/en/#outputassetfilenames
+					return "assets/[name]-[hash][extname]";
+				},
+				manualChunks: (id) => {
+					if (id.includes("monaco")) {
+						return "monaco";
+					}
+				}
+			}
+		}
+	},
   plugins: [
     VueRouter({
       dts: 'src/typed-router.d.ts',
