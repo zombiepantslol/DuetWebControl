@@ -10,12 +10,22 @@ export function getErrorMessage<B extends boolean | undefined = undefined>(e: an
 	return e ? (e.reason ?? (e.message ?? e.toString())) : ((optional !== true) ? i18n.global.t("generic.noValue") : null);
 }
 
-// Heightmap errors
+//#region Heightmap errors
 
-export class HeightmapError extends Error {}
+/**
+ * Base error class for heightmap errors
+ */
+export class HeightmapError extends Error {
+	override name: string = "HeightmapError";
+}
 
+/**
+ * Error thrown when a heightmap is invalid
+ */
 export class InvalidHeightmapError extends HeightmapError {
 	constructor() {
 		super(i18n.global.t("error.invalidHeightmap"));
 	}
 }
+
+//#endregion
