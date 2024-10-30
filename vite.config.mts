@@ -25,7 +25,7 @@ export default defineConfig({
 						if (/\.css$/.test(name)) {
 							return "css/[name]-[hash][extname]";
 						}
-						if (/\.(woff|woff2|ttf)$/.test(name)) {
+						if (/\.(eot|woff|woff2|ttf)$/.test(name)) {
 							return "fonts/[name]-[hash][extname]";
 						}
 						if (/\.(gif|jpe?g|png|svg)$/.test(name)) {
