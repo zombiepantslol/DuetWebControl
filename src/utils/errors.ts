@@ -23,6 +23,8 @@ export class HeightmapError extends Error {
  * Error thrown when a heightmap is invalid
  */
 export class InvalidHeightmapError extends HeightmapError {
+	override name: string = "InvalidHeightmapError";
+
 	constructor() {
 		super(i18n.global.t("error.invalidHeightmap"));
 	}
