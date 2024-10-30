@@ -34,7 +34,6 @@ export function subscribeToStore(pinia: Pinia) {
 	pinia.use(({ store }) => {
 		store.$subscribe(() => {
 			if (store.$id === "settings" && !settingsObserverSuspended) {
-				console.log("settings changed");
 				// Settings have changed
 				if (settingsTimer) {
 					clearTimeout(settingsTimer);
@@ -46,7 +45,6 @@ export function subscribeToStore(pinia: Pinia) {
 					settingsStore.save();
 				}, settingsStore.settingsSaveDelay);
 			} else if (store.$id === "cache" && !cacheObserverSuspended) {
-				console.log("cache changed");
 				// Cache has changed
 				if (cacheTimer) {
 					clearTimeout(cacheTimer);
