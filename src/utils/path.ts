@@ -1,9 +1,9 @@
 /**
  * Combine given path elements to a single path
- * @param  {...any} args Path elements
+ * @param  {...string} args Path elements
  * @returns Combined path
  */
-export function combine(...args: any[]) {
+export function combine(...args: string[]) {
 	let result = "";
 	for (const arg of args) {
 		if (arg.startsWith('/') || /(\d)+:.*/.test(arg)) {
