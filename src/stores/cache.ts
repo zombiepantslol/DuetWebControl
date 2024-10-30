@@ -5,15 +5,13 @@ import { defineStore } from "pinia";
 import { getLocalSetting, removeLocalSetting, setLocalSetting } from "@/utils/localStorage";
 import Path from "@/utils/path";
 
-import { useSettingsStore } from "./settings";
 import { useMachineStore } from "./machine";
+import { useSettingsStore } from "./settings";
 
 /**
  * Default cache fields defined by third-party plugins
  */
 export const defaultPluginCacheFields: Record<string, any> = {}
-
-export type SortingTable = "events" | "filaments" | "jobs" | "macros" | "menu" | "sys";
 
 export const useCacheStore = defineStore("cache", {
 	state: () => ({
@@ -28,36 +26,6 @@ export const useCacheStore = defineStore("cache", {
 		fileInfos: {} as Record<string, GCodeFileInfo>,
 
 		/**
-		 * Sorting of the different tables
-		 */
-		sorting: {
-			events: {
-				column: "date",
-				descending: true
-			},
-			filaments: {
-				column: "name",
-				descending: false
-			},
-			jobs: {
-				column: "lastModified",
-				descending: true
-			},
-			macros: {
-				column: "name",
-				descending: false
-			},
-			menu: {
-				column: "name",
-				descending: false
-			},
-			sys: {
-				column: "name",
-				descending: false
-			},
-		} as Record<SortingTable, { column: string, descending: boolean }>,
-
-		/**
 		 * Custom plugin cache fields
 		 */
 		plugins: Object.assign({}, defaultPluginCacheFields) as Record<string, any>
@@ -67,9 +35,9 @@ export const useCacheStore = defineStore("cache", {
 		 * Load the cache
 		 */
 		async load() {
-			const settingsStore = useSettingsStore(); const machineStore = useMachineStore();
+			const settingsStore = useSettingsStore(), machineStore = useMachineStore();
 
-			let cache
+			let cache;
 			if (settingsStore.cacheStorageLocal) {
 				cache = getLocalSetting("cache");
 				if (!cache) {
@@ -132,18 +100,18 @@ export const useCacheStore = defineStore("cache", {
 			if (fileOrDirectory) {
 				if (this.fileInfos[fileOrDirectory] !== undefined) {
 					// Delete specific item
-					delete this.fileInfos[fileOrDirectory]
+					delete this.fileInfos[fileOrDirectory];
 				} else {
 					// Delete directory items
 					for (const filename in this.fileInfos) {
 						if (Path.equals(fileOrDirectory, Path.extractDirectory(filename))) {
-							delete this.fileInfos[filename]
+							delete this.fileInfos[filename];
 						}
 					}
 				}
 			} else {
 				// Reset everything
-				this.fileInfos = {}
+				this.fileInfos = {};
 			}
 		},
 
@@ -154,19 +122,19 @@ export const useCacheStore = defineStore("cache", {
 		 * @param defaultValue Default value
 		 */
 		registerPluginData(plugin: string, key: string, defaultValue: any) {
-			const machineStore = useMachineStore()
+			const machineStore = useMachineStore();
 			if (!machineStore.isConnected) {
 				if (!(plugin in defaultPluginCacheFields)) {
-					defaultPluginCacheFields[plugin] = {}
+					defaultPluginCacheFields[plugin] = {};
 				}
-				defaultPluginCacheFields[plugin][key] = defaultValue
+				defaultPluginCacheFields[plugin][key] = defaultValue;
 			}
 
 			if (this.plugins[plugin] === undefined) {
-				this.plugins[plugin] = {}
+				this.plugins[plugin] = {};
 			}
 			if (!(key in this.plugins[plugin])) {
-				this.plugins[plugin][key] = defaultValue
+				this.plugins[plugin][key] = defaultValue;
 			}
 		},
 
@@ -178,9 +146,9 @@ export const useCacheStore = defineStore("cache", {
 		 */
 		setPluginData(plugin: string, key: string, value: any) {
 			if (this.plugins[plugin] === undefined) {
-				this.plugins[plugin] = { key: value }
+				this.plugins[plugin] = { key: value };
 			} else {
-				this.plugins[plugin][key] = value
+				this.plugins[plugin][key] = value;
 			}
 		}
 	}
