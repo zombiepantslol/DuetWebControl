@@ -1,11 +1,12 @@
 import { FileNotFoundError } from "@duet3d/connectors";
-import { GCodeFileInfo } from "@duet3d/objectmodel";
+import { GCodeFileInfo, initObject } from "@duet3d/objectmodel";
 import { defineStore } from "pinia";
 
 import { getLocalSetting, removeLocalSetting, setLocalSetting } from "@/utils/localStorage";
 import Path from "@/utils/path";
 
 import { useMachineStore } from "./machine";
+import { resumeCacheObserver, suspendCacheObserver } from "./observer";
 import { useSettingsStore } from "./settings";
 
 /**
@@ -65,7 +66,21 @@ export const useCacheStore = defineStore("cache", {
 			}
 
 			if (cache) {
-				this.$patch(cache);
+				try {
+					suspendCacheObserver();
+
+					// Load cache
+					const fileInfos = cache.fileInfos;
+					delete cache.fileInfos;
+					this.$patch(cache);
+
+					// Fix loaded file info types
+					for (const key in fileInfos) {
+						this.fileInfos[key] = initObject(GCodeFileInfo, fileInfos[key]);
+					}
+				} finally {
+					resumeCacheObserver();
+				}
 			}
 		},
 
