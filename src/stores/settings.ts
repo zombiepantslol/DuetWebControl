@@ -9,6 +9,7 @@ import Path from "@/utils/path";
 
 import { DefaultPluginSettings } from "./defaults";
 import { useMachineStore } from "./machine";
+import { resumeSettingsObserver, suspendSettingsObserver } from "./observer";
 
 export enum DashboardMode {
 	default = "Default",
@@ -428,7 +429,13 @@ export const useSettingsStore = defineStore("settings", {
 					}
 					delete settingsToLoad.moveSteps;
 				}
-				Object.assign(that, settingsToLoad);
+
+				try {
+					suspendSettingsObserver();
+					Object.assign(that, settingsToLoad);
+				} finally {
+					resumeSettingsObserver();
+				}
 
 				// Done
 				Events.emit("settingsLoaded");

@@ -3,6 +3,10 @@
 	height: 48px;
 	width: 48px;
 }
+
+img {
+    object-fit: contain;
+}
 </style>
 
 <template>

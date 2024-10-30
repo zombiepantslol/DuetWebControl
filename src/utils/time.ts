@@ -6,11 +6,11 @@
 export function timeToStr(time: Date) {
 	let result = "";
 	result += time.getFullYear() + '-';
-	result += (time.getMonth() + 1) + '-';
-	result += time.getDate() + 'T';
-	result += time.getHours() + ':';
-	result += time.getMinutes() + ':';
-	result += time.getSeconds();
+	result += ((time.getMonth() < 9) ? '0' : "") + (time.getMonth() + 1) + '-';
+	result += ((time.getDate() <= 9) ? '0' : "") + time.getDate() + 'T';
+	result += ((time.getHours() <= 9) ? '0' : "") + time.getHours() + ':';
+	result += ((time.getMinutes() <= 9) ? '0' : "") + time.getMinutes() + ':';
+	result += ((time.getSeconds() <= 9) ? '0' : "") + time.getSeconds();
 	return result;
 }
 

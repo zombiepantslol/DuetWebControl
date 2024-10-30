@@ -14,5 +14,6 @@ declare module 'vue' {
     NotificationDisplay: typeof import('./components/misc/NotificationDisplay.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    ThumbnailImg: typeof import('./components/misc/ThumbnailImg.vue')['default']
   }
 }
