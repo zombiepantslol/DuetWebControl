@@ -283,6 +283,9 @@ export const useMachineStore = defineStore("machine", {
 			} catch (e) {
 				if (e instanceof InvalidPasswordError) {
 					Events.emit("invalidPassword", { hostname, username, password });
+
+					this.passwordRequired = true;
+					useUiStore().showConnectDialog = true;
 				} else {
 					Events.emit("connectError", { hostname, error: e });
 

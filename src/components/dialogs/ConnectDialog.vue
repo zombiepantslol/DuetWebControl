@@ -13,7 +13,7 @@
 								  :autofocus="!machineStore.passwordRequired"
 								  :placeholder="$t('dialog.connect.hostPlaceholder')" :rules="hostnameRules" required
 								  class="mt-3" />
-					<v-text-field type="password"
+					<v-text-field type="password" :class="{ 'mt-3': machineStore.passwordRequired }"
 								  :placeholder="machineStore.passwordRequired ? $t('dialog.connect.passwordPlaceholder') : $t('dialog.connect.passwordPlaceholderOptional')"
 								  v-model="password" :autofocus="machineStore.passwordRequired" :rules="passwordRules"
 								  :required="machineStore.passwordRequired" />
