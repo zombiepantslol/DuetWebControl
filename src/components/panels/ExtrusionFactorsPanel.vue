@@ -40,7 +40,7 @@
 					</div>
 
 					<percentage-input :value="getExtrusionFactor(extruder)" @input="setExtrusionFactor(index, $event)"
-									  :max="getMax(extruder)" :step="1" :disabled="uiFrozen" />
+									  :min="0" :max="getMax(extruder)" :step="1" :disabled="uiFrozen" />
 				</div>
 			</template>
 		</v-card-text>

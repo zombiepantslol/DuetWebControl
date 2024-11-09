@@ -69,7 +69,7 @@ td {
 				<tbody>
 					<template v-for="(spindle, index) in spindles">
 						<tr v-if="(spindle !== null) && isConfigured(spindle)" :key="index"
-							:class="{ 'spindle-active' : spindle.current > 0 && spindle.active > 0 }">
+							:class="{ 'spindle-active' : (spindle.current ?? 0) > 0 && (spindle.active ?? 0) > 0 }">
 							<td>
 								{{ getName(index) }}
 							</td>
@@ -146,7 +146,11 @@ export default Vue.extend({
 			await store.dispatch("machine/sendCode", `M5 P${spindleIndex}`);
 		},
 		getValidRpm(spindle: Spindle) {
-			const rpmValues = store.state.machine.settings.spindleRPM.filter((rpm) => (rpm >= spindle.min) && (rpm <= spindle.max));
+			if (spindle.min === null || spindle.max === null) {
+				return [];
+			}
+
+			const rpmValues = store.state.machine.settings.spindleRPM.filter((rpm) => (rpm >= spindle.min!) && (rpm <= spindle.max!));
 			if (!rpmValues.includes(0)) {
 				rpmValues.push(0);
 			}
