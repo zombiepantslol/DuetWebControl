@@ -49,12 +49,12 @@
 
 				<v-spacer />
 
-				<v-btn v-if="language === 'gcode'" class="hidden-xs-only" dark text
+				<v-btn v-if="isGCode" class="hidden-xs-only" dark text
 					   href="https://docs.duet3d.com/en/User_manual/Reference/Gcodes" target="_blank">
 					<v-icon class="mr-1">mdi-help</v-icon>
 					{{ $t("dialog.fileEdit.gcodeReference") }}
 				</v-btn>
-				<v-btn v-if="language === 'gcode' && !isMediumFile" class="hidden-xs-only" dark text @click="indentComments">
+				<v-btn v-if="isGCode" class="hidden-xs-only" dark text @click="indentComments">
 					<v-icon class="mr-1">mdi-format-indent-increase</v-icon>
 					{{ $t("dialog.fileEdit.indentComments") }}
 				</v-btn>
@@ -130,6 +130,9 @@ export default Vue.extend({
 				return "STM32";
 			}
 			return "";
+		},
+		isGCode(): boolean {
+			return this.language.startsWith("gcode");
 		},
 		isMenu(): boolean {
 			return Path.startsWith(this.filename, this.menuDirectory);
