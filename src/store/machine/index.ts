@@ -622,7 +622,8 @@ export default function(connector: BaseConnector | null): MachineModule {
 									if (notification && notification.onProgress) {
 										notification.onProgress(loaded, total, item.speed);
 									}
-								}
+								},
+								rawPath
 							);
 							item.progress = 1;
 
