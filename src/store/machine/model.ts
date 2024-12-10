@@ -183,7 +183,13 @@ export default function (connector: BaseConnector | null): MachineModel {
 					} else if (key === "plugins") {
 						const clonedPlugins = new Map<string, Plugin>();
 						for (const [key, value] of typedState.plugins) {
-							clonedPlugins.set(key, JSON.parse(JSON.stringify(value)));
+							const clonedPlugin = JSON.parse(JSON.stringify(value));
+							if (value !== null) {
+								for (const [dataKey, dataValue] of value.data) {
+									clonedPlugin.data[dataKey] = dataValue;
+								}
+							}
+							clonedPlugins.set(key, clonedPlugin);
 						}
 						Vue.set(state, "plugins", clonedPlugins);
 					} else if (key === "sbc" && state.sbc === null) {
