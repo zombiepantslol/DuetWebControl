@@ -196,7 +196,11 @@
       "titleChange": "改变细丝",
       "titleLoad": "载入细丝",
       "prompt": "请选择细丝：",
-      "noFilaments": "没有可用细丝"
+      "noFilaments": "没有可用细丝",
+      "changePrompt": {
+        "message": "更换灯丝后按“确定”",
+        "title": "灯丝变化"
+      }
     },
     "fileEdit": {
       "gcodeReference": "G-Code参考",
@@ -784,7 +788,8 @@
     },
     "settingsBehaviour": {
       "caption": "行为",
-      "behaviourJobStart": "任务开始时不自动切换到状态面板"
+      "behaviourJobStart": "任务开始时不自动切换到状态面板",
+      "promptDuringFilamentChange": "更换灯丝时卸载灯丝后显示消息提示"
     },
     "settingsWebcam": {
       "caption": "网络摄像头",

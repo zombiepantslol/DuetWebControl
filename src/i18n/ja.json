@@ -196,7 +196,11 @@
       "titleChange": "フィラメント変更",
       "titleLoad": "フィラメント読み込み",
       "prompt": "フィラメントを選択してください:",
-      "noFilaments": "フィラメントがありません"
+      "noFilaments": "フィラメントがありません",
+      "changePrompt": {
+        "message": "フィラメントが変更されたら「OK」を押します",
+        "title": "フィラメントの交換"
+      }
     },
     "fileEdit": {
       "gcodeReference": "G-Codeリファレンス",
@@ -785,7 +789,8 @@
     },
     "settingsBehaviour": {
       "caption": "行動",
-      "behaviourJobStart": "ジョブの開始時にステータス パネルに自動切り替えしない"
+      "behaviourJobStart": "ジョブの開始時にステータス パネルに自動切り替えしない",
+      "promptDuringFilamentChange": "フィラメントを交換するときにフィラメントをアンロードした後にメッセージプロンプトを表示する"
     },
     "settingsWebcam": {
       "caption": "ウェブカメラ",

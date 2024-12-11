@@ -7,8 +7,12 @@
 		<v-card-text>
 			<v-row>
 				<v-col cols="12" xs="12">
-					<v-switch class="mt-0 mb-3" v-model="behaviourJobStart"
+					<v-switch class="mt-0" v-model="behaviourJobStart"
 							  :label="$t('panel.settingsBehaviour.behaviourJobStart')" hide-details />
+				</v-col>
+				<v-col cols="12" xs="12">
+					<v-switch class="mt-0 mb-3" v-model="promptDuringFilamentChange"
+							  :label="$t('panel.settingsBehaviour.promptDuringFilamentChange')" hide-details />
 				</v-col>
 			</v-row>
 		</v-card-text>
@@ -27,6 +31,10 @@ export default Vue.extend({
 			get(): boolean { return store.state.settings.behaviour.jobStart; },
 			set(value: boolean) { this.update({ jobStart: value }); }
 		},
+		promptDuringFilamentChange: {
+			get(): boolean { return store.state.settings.behaviour.promptDuringFilamentChange; },
+			set(value: boolean) { this.update({ promptDuringFilamentChange: value }); }
+		}
 	},
 	methods: {
 		update(data: Partial<SettingsState["behaviour"]>) {

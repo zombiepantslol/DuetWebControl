@@ -196,7 +196,11 @@
       "titleChange": "Trocar Filamento",
       "titleLoad": "Carregar Filamento",
       "prompt": "Escolha um filamento:",
-      "noFilaments": "Nenhum filamento disponível"
+      "noFilaments": "Nenhum filamento disponível",
+      "changePrompt": {
+        "message": "Pressione OK quando o filamento for trocado",
+        "title": "Mudança de Filamento"
+      }
     },
     "fileEdit": {
       "gcodeReference": "Referência do G-Code ",
@@ -785,7 +789,8 @@
     },
     "settingsBehaviour": {
       "caption": "Comportamento",
-      "behaviourJobStart": "Não alterne automaticamente para o Painel de status no início do trabalho"
+      "behaviourJobStart": "Não alterne automaticamente para o Painel de status no início do trabalho",
+      "promptDuringFilamentChange": "Mostrar prompt de mensagem após descarregar o filamento ao trocá-lo"
     },
     "settingsWebcam": {
       "caption": "Webcam",

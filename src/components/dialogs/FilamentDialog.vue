@@ -86,8 +86,13 @@ export default Vue.extend({
 
 			if (this.tool.filamentExtruder >= 0 && this.tool.filamentExtruder < store.state.machine.model.move.extruders.length &&
 				store.state.machine.model.move.extruders[this.tool.filamentExtruder].filament) {
-				// Unload current filament, normally this should not be necessary
+				// Unload current filament if it is still loaded
 				code += "M702\n";
+
+				// Show message box between unload/load if required
+				if (store.state.settings.behaviour.promptDuringFilamentChange) {
+					code += `M291 P"${this.$t("dialog.filament.changePrompt.message")}" R"${this.$t("dialog.filament.changePrompt.title")}" S2\n`;
+				}
 			}
 
 			// Run load sequence and configure current tool for it

@@ -126,6 +126,11 @@ export interface SettingsState {
 		 * Stop auto switch to Status Panel On Job Start
 		 */
 		 jobStart: boolean;
+
+		 /**
+		  * Prompt user during filament change
+		  */
+		 promptDuringFilamentChange: boolean;
 	},
 
 	/**
@@ -211,7 +216,8 @@ export default {
 		},
 
 		behaviour: {
-			 jobStart: false
+			jobStart: false,
+			promptDuringFilamentChange: true
 		},
 
 		webcam: {

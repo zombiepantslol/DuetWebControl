@@ -50,7 +50,7 @@
                                     </template>
 
                                     <v-list>
-                                        <v-list-item @click="changeFilament(tool)">
+                                        <v-list-item @click="showFilamentDialog(tool)">
                                             <v-icon class="mr-1">mdi-swap-vertical</v-icon>
                                             {{ $t("panel.tools.changeFilament") }}
                                         </v-list-item>
@@ -319,11 +319,6 @@ async function showFilamentDialog(tool: Tool) {
     filamentDialogShown.value = true;
 }
 
-async function changeFilament(tool: Tool) {
-    await unloadFilament(tool);
-    await showFilamentDialog(tool);
-}
-
 async function unloadFilament(tool: Tool) {
     if (busyTool.value !== null) {
         return;
@@ -406,6 +401,6 @@ function getSpindle(tool: Tool) {
 
 function getSpindleSpeed(tool: Tool) {
     const spindle = getSpindle(tool);
-    return spindle ? ((spindle.state === SpindleState.reverse) ? -spindle.current : spindle.current) : 0;
+    return (spindle !== null && spindle.current !== null) ? ((spindle.state === SpindleState.reverse) ? -spindle.current : spindle.current) : 0;
 }
 </script>

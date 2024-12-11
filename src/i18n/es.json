@@ -196,7 +196,11 @@
       "titleChange": "Cambiar Filamento",
       "titleLoad": "Cargar Filamento",
       "prompt": "Por favor, elija un filamento:",
-      "noFilaments": "No hay filamentos disponibles"
+      "noFilaments": "No hay filamentos disponibles",
+      "changePrompt": {
+        "message": "Pulsa OK cuando se haya cambiado el filamento.",
+        "title": "Cambio de filamento"
+      }
     },
     "fileEdit": {
       "gcodeReference": "Referencia G-Code",
@@ -785,7 +789,8 @@
     },
     "settingsBehaviour": {
       "caption": "Comportamiento",
-      "behaviourJobStart": "No cambiar automáticamente al Panel de estado al iniciar el trabajo"
+      "behaviourJobStart": "No cambiar automáticamente al Panel de estado al iniciar el trabajo",
+      "promptDuringFilamentChange": "Mostrar mensaje después de descargar el filamento al cambiarlo"
     },
     "settingsWebcam": {
       "caption": "Webcam",

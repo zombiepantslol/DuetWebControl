@@ -196,7 +196,11 @@
       "titleChange": "Filament ändern",
       "titleLoad": "Filament laden",
       "prompt": "Bitte wählen Sie ein Filament:",
-      "noFilaments": "Keine Filamente verfügbar"
+      "noFilaments": "Keine Filamente verfügbar",
+      "changePrompt": {
+        "message": "Drücken Sie OK, wenn das Filament gewechselt wurde",
+        "title": "Filamentwechsel"
+      }
     },
     "fileEdit": {
       "gcodeReference": "G-Code-Referenz",
@@ -785,7 +789,8 @@
     },
     "settingsBehaviour": {
       "caption": "Verhalten",
-      "behaviourJobStart": "Beim Jobstart nicht automatisch zum Statusbereich wechseln"
+      "behaviourJobStart": "Beim Jobstart nicht automatisch zum Statusbereich wechseln",
+      "promptDuringFilamentChange": "Bestätigungsmeldung nach dem Entladen eines Filaments beim Filamentwechsel anzeigen"
     },
     "settingsWebcam": {
       "caption": "Webcam",

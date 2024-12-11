@@ -196,7 +196,11 @@
       "titleChange": "Смена филамента",
       "titleLoad": "Загрузить филамент",
       "prompt": "Выберите филамент:",
-      "noFilaments": "Нити доступны"
+      "noFilaments": "Нити доступны",
+      "changePrompt": {
+        "message": "Нажмите ОК, когда нить будет заменена.",
+        "title": "Замена нити"
+      }
     },
     "fileEdit": {
       "gcodeReference": "Информация о G-коде",
@@ -785,7 +789,8 @@
     },
     "settingsBehaviour": {
       "caption": "Поведение",
-      "behaviourJobStart": "Не переключаться автоматически на панель состояния при запуске задания"
+      "behaviourJobStart": "Не переключаться автоматически на панель состояния при запуске задания",
+      "promptDuringFilamentChange": "Показывать сообщение после выгрузки нити при ее замене"
     },
     "settingsWebcam": {
       "caption": "Камера",

@@ -196,7 +196,11 @@
       "titleChange": "Filament váltás",
       "titleLoad": "Filament betöltés",
       "prompt": "Válasszon filamentet:",
-      "noFilaments": "Nem áll rendelkezésre filament"
+      "noFilaments": "Nem áll rendelkezésre filament",
+      "changePrompt": {
+        "message": "Nyomja meg az OK gombot, ha az izzószálat kicserélte",
+        "title": "Izzószál csere"
+      }
     },
     "fileEdit": {
       "gcodeReference": "G-kód referencia",
@@ -784,7 +788,8 @@
     },
     "settingsBehaviour": {
       "caption": "Viselkedés",
-      "behaviourJobStart": "Ne váltson automatikusan az Állapot panelre a munka indításakor"
+      "behaviourJobStart": "Ne váltson automatikusan az Állapot panelre a munka indításakor",
+      "promptDuringFilamentChange": "Üzenetsor megjelenítése az izzószál kirakása után, amikor azt cseréli"
     },
     "settingsWebcam": {
       "caption": "Webkamera",

@@ -196,7 +196,11 @@
       "titleChange": "Zmiana filamentu",
       "titleLoad": "Wczytaj filament",
       "prompt": "Proszę wybrać filament:",
-      "noFilaments": "Brak dostępnego filamentu"
+      "noFilaments": "Brak dostępnego filamentu",
+      "changePrompt": {
+        "message": "Naciśnij OK po wymianie żarnika",
+        "title": "Zmiana włókna"
+      }
     },
     "fileEdit": {
       "gcodeReference": "G-Code Reference",
@@ -785,7 +789,8 @@
     },
     "settingsBehaviour": {
       "caption": "Zachowanie",
-      "behaviourJobStart": "Nie przełączaj się automatycznie do Panelu stanu podczas uruchamiania zadania"
+      "behaviourJobStart": "Nie przełączaj się automatycznie do Panelu stanu podczas uruchamiania zadania",
+      "promptDuringFilamentChange": "Wyświetl komunikat po wyładowaniu żarnika podczas jego wymiany"
     },
     "settingsWebcam": {
       "caption": "Kamera",

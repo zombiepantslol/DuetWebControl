@@ -196,7 +196,11 @@
       "titleChange": "Filament Değiştir",
       "titleLoad": "Filament Yükle",
       "prompt": "Lütfen filamenti seçin:",
-      "noFilaments": "Filament yok"
+      "noFilaments": "Filament yok",
+      "changePrompt": {
+        "message": "Filament değiştirildiğinde Tamam'a basın",
+        "title": "Filament Değişimi"
+      }
     },
     "fileEdit": {
       "gcodeReference": "G-Code Referansı",
@@ -785,7 +789,8 @@
     },
     "settingsBehaviour": {
       "caption": "Davranış",
-      "behaviourJobStart": "İş başlangıcında Durum Paneline otomatik geçiş yapma"
+      "behaviourJobStart": "İş başlangıcında Durum Paneline otomatik geçiş yapma",
+      "promptDuringFilamentChange": "Filamenti değiştirirken boşalttıktan sonra mesaj istemini göster"
     },
     "settingsWebcam": {
       "caption": "Web kamerası",

@@ -199,7 +199,11 @@
       "noFilaments": "Geen Filamenten beschikbaar",
       "prompt": "Kies een filament:",
       "titleChange": "Vervang de filament",
-      "titleLoad": "Laad filament"
+      "titleLoad": "Laad filament",
+      "changePrompt": {
+        "message": "Druk op OK als het filament is vervangen",
+        "title": "Gloeidraadverandering"
+      }
     },
     "fileEdit": {
       "confirmClose": "Het bestand is gewijzigd. \nAls u doorgaat, gaan uw wijzigingen verloren.",
@@ -728,7 +732,8 @@
     },
     "settingsBehaviour": {
       "behaviourJobStart": "Schakel niet automatisch over naar Statuspaneel bij het starten van de taak",
-      "caption": "Gedrag"
+      "caption": "Gedrag",
+      "promptDuringFilamentChange": "Toon berichtprompt na het verwijderen van het filament bij het vervangen ervan"
     },
     "settingsCommunication": {
       "ajaxRetries": "Aantal maximale AJAX-pogingen",

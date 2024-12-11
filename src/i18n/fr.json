@@ -196,7 +196,11 @@
       "titleChange": "Changer Filament",
       "titleLoad": "Charger Filament",
       "prompt": "Merci de choisir un filament:",
-      "noFilaments": "Aucun filament disponible"
+      "noFilaments": "Aucun filament disponible",
+      "changePrompt": {
+        "message": "Appuyez sur OK lorsque le filament a été changé",
+        "title": "Changement de filament"
+      }
     },
     "fileEdit": {
       "gcodeReference": "Références G-Code",
@@ -785,7 +789,8 @@
     },
     "settingsBehaviour": {
       "caption": "Comportement",
-      "behaviourJobStart": "Ne pas basculer automatiquement vers le panneau d'état au démarrage du travail"
+      "behaviourJobStart": "Ne pas basculer automatiquement vers le panneau d'état au démarrage du travail",
+      "promptDuringFilamentChange": "Afficher un message après avoir déchargé le filament lors de son changement"
     },
     "settingsWebcam": {
       "caption": "Webcam",

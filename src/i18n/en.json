@@ -196,7 +196,11 @@
       "titleChange": "Change Filament",
       "titleLoad": "Load Filament",
       "prompt": "Please choose a filament:",
-      "noFilaments": "No Filaments available"
+      "noFilaments": "No Filaments available",
+      "changePrompt": {
+        "message": "Press OK when the filament has been changed",
+        "title": "Filament Change"
+      }
     },
     "fileEdit": {
       "gcodeReference": "G-Code Reference",
@@ -784,7 +788,8 @@
     },
     "settingsBehaviour": {
       "caption": "Behaviour",
-      "behaviourJobStart": "Do not auto switch to Status Panel on job start"
+      "behaviourJobStart": "Do not auto switch to Status Panel on job start",
+      "promptDuringFilamentChange": "Show message prompt after unloading the filament when changing it"
     },
     "settingsWebcam": {
       "caption": "Webcam",
