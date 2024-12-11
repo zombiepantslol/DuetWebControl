@@ -316,6 +316,11 @@
       "prompt": "Yüklü yazılım sürümleri eşleşmiyor. \nOlası uyumsuzlukları ve beklenmeyen hataları önlemek için lütfen kurulumunuzu yalnızca eşit sürümlerde çalıştırın.",
       "title": "Uyumsuz yazılım sürümleri",
       "upgradeNotice": "Lütfen Duet yazılım bileşenlerinizi nasıl yükselteceğinizle ilgili {docs}'a bakın."
+    },
+    "deleteFiles": {
+      "deleteMulitiplePrompt": "Seçilen dosyaları silmek istediğinizden emin misiniz?",
+      "deletePrompt": "{0} öğesini silmek istediğinizden emin misiniz?",
+      "title": "Dosyayı Sil|Dosyaları Sil"
     }
   },
   "directory": {

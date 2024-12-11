@@ -316,6 +316,11 @@
     "duplicateFilament": {
       "prompt": "Kérem adjon meg egy nevet a filament másolathoz:",
       "title": "Filament megkettőzése"
+    },
+    "deleteFiles": {
+      "deleteMulitiplePrompt": "Biztosan törli a kiválasztott fájlokat?",
+      "deletePrompt": "Biztosan törli a következőt: {0}?",
+      "title": "Fájl törlése | Fájlok törlése"
     }
   },
   "directory": {

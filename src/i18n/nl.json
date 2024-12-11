@@ -315,6 +315,11 @@
       "sbcWarning": "U bedient uw machine in de SBC-modus. \nUpgrade de firmware alleen met behulp van DWC als dit wordt geadviseerd door de firmware-ontwikkelaars.",
       "title": "Installeer updates?",
       "updateWiFiFirmware": "Installeer de meegeleverde WiFi-firmware-update"
+    },
+    "deleteFiles": {
+      "deleteMulitiplePrompt": "Weet u zeker dat u de geselecteerde bestanden wilt verwijderen?",
+      "deletePrompt": "Weet u zeker dat u {0} wilt verwijderen?",
+      "title": "Bestand verwijderen|Bestanden verwijderen"
     }
   },
   "directory": {

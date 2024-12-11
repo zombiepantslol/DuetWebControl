@@ -316,6 +316,11 @@
     "duplicateFilament": {
       "prompt": "Please enter a name for the filament copy:",
       "title": "Duplicate Filament"
+    },
+    "deleteFiles": {
+      "title": "Delete File|Delete Files",
+      "deleteMulitiplePrompt": "Are you sure you want to delete the selected files?",
+      "deletePrompt": "Are you sure you want to delete {0}?"
     }
   },
   "directory": {

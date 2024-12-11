@@ -316,6 +316,11 @@
       "prompt": "Les versions logicielles installées ne correspondent pas. \nVeuillez utiliser votre configuration uniquement avec des versions égales pour éviter les incompatibilités potentielles et les erreurs inattendues.",
       "title": "Versions logicielles incompatibles",
       "upgradeNotice": "Veuillez consulter la {docs} pour savoir comment mettre à niveau vos composants logiciels Duet."
+    },
+    "deleteFiles": {
+      "deleteMulitiplePrompt": "Êtes-vous sûr de vouloir supprimer les fichiers sélectionnés ?",
+      "deletePrompt": "Êtes-vous sûr de vouloir supprimer {0} ?",
+      "title": "Supprimer le fichier|Supprimer les fichiers"
     }
   },
   "directory": {

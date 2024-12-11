@@ -316,6 +316,11 @@
       "prompt": "Zainstalowane wersje oprogramowania nie są zgodne. \nAby uniknąć potencjalnych niezgodności i nieoczekiwanych błędów, używaj swojej konfiguracji tylko w równych wersjach.",
       "title": "Niekompatybilne wersje oprogramowania",
       "upgradeNotice": "Sprawdź {docs}, jak zaktualizować składniki oprogramowania Duet."
+    },
+    "deleteFiles": {
+      "deleteMulitiplePrompt": "Czy na pewno chcesz usunąć wybrane pliki?",
+      "deletePrompt": "Czy na pewno chcesz usunąć {0}?",
+      "title": "Usuń plik|Usuń pliki"
     }
   },
   "directory": {

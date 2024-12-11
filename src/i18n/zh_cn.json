@@ -316,6 +316,11 @@
     "duplicateFilament": {
       "prompt": "请输入细丝副本的名称：",
       "title": "复制细丝"
+    },
+    "deleteFiles": {
+      "deleteMulitiplePrompt": "您确定要删除选定的文件吗？",
+      "deletePrompt": "您确定要删除 {0} 吗？",
+      "title": "删除文件|删除文件"
     }
   },
   "directory": {

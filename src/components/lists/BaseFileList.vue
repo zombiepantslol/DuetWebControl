@@ -60,7 +60,8 @@ td {
 								<slot :name="`${props.item.isDirectory ? 'folder' : 'file'}.${props.item.name}`"
 									  :item="props.item">
 									<slot :name="props.item.isDirectory ? 'folder' : 'file'" :item="props.item">
-										<v-icon class="mr-1">{{ props.item.isDirectory ? folderIcon : fileIcon }}</v-icon>
+										<v-icon
+												class="mr-1">{{ props.item.isDirectory ? folderIcon : fileIcon }}</v-icon>
 										{{ props.item.name }}
 									</slot>
 								</slot>
@@ -73,7 +74,8 @@ td {
 							{{ props.item.lastModified ? props.item.lastModified.toLocaleString() : $t("generic.noValue") }}
 						</template>
 						<template v-else-if="header.unit === 'filaments'">
-							<v-tooltip bottom :disabled="!props.item[header.value] || props.item[header.value].length <= 1">
+							<v-tooltip bottom
+									   :disabled="!props.item[header.value] || props.item[header.value].length <= 1">
 								<template #activator="{ on }">
 									<span v-on="on">
 										{{ displayLoadingValue(props.item, header.value, 1, "mm") }}
@@ -124,6 +126,9 @@ td {
 
 		<file-edit-dialog :shown.sync="editDialog.shown" :filename="editDialog.filename" v-model="editDialog.content"
 						  @editComplete="$emit('fileEdited', $event)" />
+		<confirm-dialog :shown.sync="removeDialog.shown" :title="$tc('dialog.deleteFiles.title', innerValue.length)"
+						:prompt="(removeDialog.items.length > 1) ? $t('dialog.deleteFiles.deleteMulitiplePrompt') : $t('dialog.deleteFiles.deletePrompt', [(removeDialog.items.length > 0) ? removeDialog.items[0].name : ''])"
+						@confirmed="removeCallback" />
 		<input-dialog :shown.sync="renameDialog.shown" :title="$t('dialog.renameFile.title')"
 					  :prompt="$t('dialog.renameFile.prompt')" :preset="renameDialog.item && renameDialog.item.name"
 					  @confirmed="renameCallback" />
@@ -145,6 +150,7 @@ import { DisconnectedError, getErrorMessage, OperationCancelledError } from "@/u
 import Events from "@/utils/events";
 import Path from "@/utils/path";
 import { LogType } from "@/utils/logging";
+import { isThisQuarter } from "date-fns";
 
 /**
  * Maximum permitted size of files to edit (defaults to 32MiB)
@@ -288,6 +294,11 @@ export default VDataTable.extend({
 				shown: false,
 				directory: "",
 				item: null as BaseFileListItem | null
+			},
+			removeDialog: {
+				shown: false,
+				directory: "",
+				items: new Array<BaseFileListItem>()
 			}
 		}
 	},
@@ -626,30 +637,30 @@ export default VDataTable.extend({
 			}
 			this.innerDoingFileOperation = false;
 		},
-		async remove(items?: Array<BaseFileListItem>) {
-			if (!items) {
-				items = this.innerValue.slice();
-			}
-
+		remove() {
+			this.removeDialog.directory = this.innerDirectory;
+			this.removeDialog.items = this.innerValue.slice();
+			this.removeDialog.shown = true;
+		},
+		async removeCallback() {
 			if (this.innerDoingFileOperation) {
 				return;
 			}
 
 			this.innerDoingFileOperation = true;
 			const deletedItems = [], directory = this.directory;
-			for (let i = 0; i < items.length; i++) {
+			for (const item of this.removeDialog.items) {
 				try {
-					const item = items[i];
 					await store.dispatch("machine/delete", {
 						filename: Path.combine(directory, item.name),
 						recursive: item.isDirectory ? true : undefined
 					});
 
-					deletedItems.push(items[i]);
+					deletedItems.push(item);
 					this.innerFilelist = this.innerFilelist.filter(file => file.isDirectory !== item.isDirectory || file.name !== item.name);
 					this.innerValue = this.innerValue.filter(file => file.isDirectory !== item.isDirectory || file.name !== item.name);
 				} catch (e) {
-					this.$makeNotification(LogType.error, this.$t("notification.delete.errorTitle", [items[i].name]), getErrorMessage(e));
+					this.$makeNotification(LogType.error, this.$t("notification.delete.errorTitle", [item.name]), getErrorMessage(e));
 				}
 			}
 
