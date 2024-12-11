@@ -126,9 +126,9 @@ td {
 
 		<file-edit-dialog :shown.sync="editDialog.shown" :filename="editDialog.filename" v-model="editDialog.content"
 						  @editComplete="$emit('fileEdited', $event)" />
-		<confirm-dialog :shown.sync="forceMoveDialog.shown" :title="$t('dialog.overwriteFile.title')"
-						:prompt="$t('dialog.overwriteFile.prompt')" @confirmed="forceMove" />
-		<confirm-dialog :shown.sync="removeDialog.shown" :title="$tc('dialog.deleteFiles.title', innerValue.length)"
+		<confirm-dialog :shown.sync="forceMoveDialog.shown" :title="$t('dialog.forceMove.title')"
+						:prompt="$t('dialog.forceMove.prompt')" @confirmed="forceMove" />
+		<confirm-dialog :shown.sync="removeDialog.shown" :title="$tc('dialog.deleteFiles.title', removeDialog.items.length)"
 						:prompt="(removeDialog.items.length > 1) ? $t('dialog.deleteFiles.deleteMulitiplePrompt') : $t('dialog.deleteFiles.deletePrompt', [(removeDialog.items.length > 0) ? removeDialog.items[0].name : ''])"
 						@confirmed="removeCallback" />
 		<input-dialog :shown.sync="renameDialog.shown" :title="$t('dialog.renameFile.title')"
