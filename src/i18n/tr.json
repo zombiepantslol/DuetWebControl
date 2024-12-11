@@ -321,6 +321,10 @@
       "deleteMulitiplePrompt": "Seçilen dosyaları silmek istediğinizden emin misiniz?",
       "deletePrompt": "{0} öğesini silmek istediğinizden emin misiniz?",
       "title": "Dosyayı Sil|Dosyaları Sil"
+    },
+    "forceMove": {
+      "prompt": "Seçilen dosya taşınamadı; aynı adda bir dosya zaten mevcut olabilir. \nÜzerine yazmayı denemek ister misiniz?",
+      "title": "Dosyanın Üzerine Yaz"
     }
   },
   "directory": {

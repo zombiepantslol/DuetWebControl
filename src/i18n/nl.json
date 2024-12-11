@@ -320,6 +320,10 @@
       "deleteMulitiplePrompt": "Weet u zeker dat u de geselecteerde bestanden wilt verwijderen?",
       "deletePrompt": "Weet u zeker dat u {0} wilt verwijderen?",
       "title": "Bestand verwijderen|Bestanden verwijderen"
+    },
+    "forceMove": {
+      "prompt": "Kan het geselecteerde bestand niet verplaatsen, misschien bestaat er al een bestand met dezelfde naam. \nWilt u proberen het te overschrijven?",
+      "title": "Bestand overschrijven"
     }
   },
   "directory": {

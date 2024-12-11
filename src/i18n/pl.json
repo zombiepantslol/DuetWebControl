@@ -321,6 +321,10 @@
       "deleteMulitiplePrompt": "Czy na pewno chcesz usunąć wybrane pliki?",
       "deletePrompt": "Czy na pewno chcesz usunąć {0}?",
       "title": "Usuń plik|Usuń pliki"
+    },
+    "forceMove": {
+      "prompt": "Nie można przenieść wybranego pliku, być może plik o tej samej nazwie już istnieje. \nCzy chcesz spróbować go zastąpić?",
+      "title": "Zastąp plik"
     }
   },
   "directory": {

@@ -321,6 +321,10 @@
       "deleteMulitiplePrompt": "Biztosan törli a kiválasztott fájlokat?",
       "deletePrompt": "Biztosan törli a következőt: {0}?",
       "title": "Fájl törlése | Fájlok törlése"
+    },
+    "forceMove": {
+      "prompt": "Nem sikerült áthelyezni a kiválasztott fájlt, lehet, hogy az azonos nevű fájl már létezik. \nMegpróbálja felülírni?",
+      "title": "Fájl felülírása"
     }
   },
   "directory": {

@@ -321,6 +321,10 @@
       "deleteMulitiplePrompt": "Tem certeza de que deseja excluir os arquivos selecionados?",
       "deletePrompt": "Tem certeza de que deseja excluir {0}?",
       "title": "Excluir arquivo|Excluir arquivos"
+    },
+    "forceMove": {
+      "prompt": "Não foi possível mover o arquivo selecionado, talvez já exista um arquivo com o mesmo nome. \nVocê quer tentar sobrescrevê-lo?",
+      "title": "Substituir arquivo"
     }
   },
   "directory": {

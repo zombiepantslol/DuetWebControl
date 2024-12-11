@@ -321,6 +321,10 @@
       "deleteMulitiplePrompt": "您确定要删除选定的文件吗？",
       "deletePrompt": "您确定要删除 {0} 吗？",
       "title": "删除文件|删除文件"
+    },
+    "forceMove": {
+      "prompt": "无法移动所选文件，可能同名文件已存在。\n您想尝试覆盖它吗？",
+      "title": "覆盖文件"
     }
   },
   "directory": {

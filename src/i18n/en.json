@@ -321,6 +321,10 @@
       "title": "Delete File|Delete Files",
       "deleteMulitiplePrompt": "Are you sure you want to delete the selected files?",
       "deletePrompt": "Are you sure you want to delete {0}?"
+    },
+    "forceMove": {
+      "title": "Overwrite File",
+      "prompt": "Could not move the selected file, maybe the a file with the same name already exists. Do you want to attempt to overwrite it?"
     }
   },
   "directory": {

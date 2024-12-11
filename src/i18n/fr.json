@@ -321,6 +321,10 @@
       "deleteMulitiplePrompt": "Êtes-vous sûr de vouloir supprimer les fichiers sélectionnés ?",
       "deletePrompt": "Êtes-vous sûr de vouloir supprimer {0} ?",
       "title": "Supprimer le fichier|Supprimer les fichiers"
+    },
+    "forceMove": {
+      "prompt": "Impossible de déplacer le fichier sélectionné. Il se peut qu'un fichier portant le même nom existe déjà. \nVoulez-vous essayer de l'écraser ?",
+      "title": "Écraser le fichier"
     }
   },
   "directory": {

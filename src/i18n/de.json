@@ -321,6 +321,10 @@
       "deleteMulitiplePrompt": "Sind Sie sicher, dass Sie die ausgewählten Dateien löschen möchten?",
       "deletePrompt": "Sind Sie sicher, dass Sie {0} löschen möchten?",
       "title": "Datei löschen|Dateien löschen"
+    },
+    "forceMove": {
+      "prompt": "Die ausgewählte Datei konnte nicht verschoben werden, möglicherweise existiert bereits eine Datei mit demselben Namen. \nMöchten Sie versuchen, es zu überschreiben?",
+      "title": "Datei überschreiben"
     }
   },
   "directory": {

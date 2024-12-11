@@ -126,6 +126,8 @@ td {
 
 		<file-edit-dialog :shown.sync="editDialog.shown" :filename="editDialog.filename" v-model="editDialog.content"
 						  @editComplete="$emit('fileEdited', $event)" />
+		<confirm-dialog :shown.sync="forceMoveDialog.shown" :title="$t('dialog.overwriteFile.title')"
+						:prompt="$t('dialog.overwriteFile.prompt')" @confirmed="forceMove" />
 		<confirm-dialog :shown.sync="removeDialog.shown" :title="$tc('dialog.deleteFiles.title', innerValue.length)"
 						:prompt="(removeDialog.items.length > 1) ? $t('dialog.deleteFiles.deleteMulitiplePrompt') : $t('dialog.deleteFiles.deletePrompt', [(removeDialog.items.length > 0) ? removeDialog.items[0].name : ''])"
 						@confirmed="removeCallback" />
@@ -150,7 +152,7 @@ import { DisconnectedError, getErrorMessage, OperationCancelledError } from "@/u
 import Events from "@/utils/events";
 import Path from "@/utils/path";
 import { LogType } from "@/utils/logging";
-import { isThisQuarter } from "date-fns";
+import ConfirmDialog from "../dialogs/ConfirmDialog.vue";
 
 /**
  * Maximum permitted size of files to edit (defaults to 32MiB)
@@ -289,6 +291,11 @@ export default VDataTable.extend({
 				shown: false,
 				filename: "",
 				content: ""
+			},
+			forceMoveDialog: {
+				from: "",
+				to: "",
+				shown: false
 			},
 			renameDialog: {
 				shown: false,
@@ -573,11 +580,28 @@ export default VDataTable.extend({
 						try {
 							await store.dispatch("machine/move", { from, to });
 						} catch (e) {
-							this.$makeNotification(LogType.error, `Failed to move ${dragItem.name} to ${directory}`, getErrorMessage(e));
+							if (data.items.length === 1) {
+								this.forceMoveDialog.from = from;
+								this.forceMoveDialog.to = to;
+								this.forceMoveDialog.shown = true;
+							} else {
+								this.$makeNotification(LogType.error, `Failed to move ${dragItem.name} to ${directory}`, getErrorMessage(e));
+							}
 							break;
 						}
 					}
 				}
+			}
+		},
+		async forceMove() {
+			try {
+				await store.dispatch("machine/move", {
+					from: this.forceMoveDialog.from,
+					to: this.forceMoveDialog.to,
+					force: true
+				});
+			} catch (e) {
+				this.$makeNotification(LogType.error, `Failed to move ${this.forceMoveDialog.from} to ${this.forceMoveDialog.to}`, getErrorMessage(e));
 			}
 		},
 		async download(item: BaseFileListItem) {
