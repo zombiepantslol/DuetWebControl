@@ -47,7 +47,16 @@ export default Vue.extend({
 				return store.state.machine.settings.spindleRPM;
 			}
 			const key = this.active ? "active" : "standby";
-			if (this.type === "tool" || this.type === "all") {
+			if (this.type === "all") {
+				if (this.controlBeds) {
+					return store.state.machine.settings.temperatures.bed[key];
+				}
+				if (this.controlChambers) {
+					return store.state.machine.settings.temperatures.chamber;
+				}
+				return store.state.machine.settings.temperatures.tool[key];
+			}
+			if (this.type === "tool") {
 				return store.state.machine.settings.temperatures.tool[key];
 			}
 			if (this.type === "bed") {
