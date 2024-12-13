@@ -22,7 +22,8 @@
                             </v-list-item>
 
                             <template v-for="{ heater, heaterIndex, index } in heaterItems">
-                                <v-list-item v-if="heater !== null" :key="index" @click="selectHeater(index, heater, heaterIndex)">
+                                <v-list-item v-if="heater !== null" :key="index"
+                                             @click="selectHeater(index, heater, heaterIndex)">
                                     <v-list-item-title>
                                         <v-icon class="mr-1"
                                                 v-text="(props.type === 'bed') ? 'mdi-radiator' : 'mdi-heat-pump-outline'" />
@@ -58,12 +59,18 @@
 
                 <!-- Heater active -->
                 <td class="pl-2 pr-1">
-                    <control-input type="all" control-beds active />
+                    <control-input type="all"
+                                   :control-beds="type === 'bed' && store.state.machine.settings.singleBedControl"
+                                   :control-chambers="type == 'chamber' && store.state.machine.settings.singleChamberControl"
+                                   active />
                 </td>
 
                 <!-- Heater standby -->
                 <td class="pl-1 pr-2">
-                    <control-input type="all" control-beds standby />
+                    <control-input type="all"
+                                   :control-beds="type === 'bed' && store.state.machine.settings.singleBedControl"
+                                   :control-chambers="type == 'chamber' && store.state.machine.settings.singleChamberControl"
+                                   standby />
                 </td>
             </tr>
         </template>
@@ -76,7 +83,8 @@
                         <!-- Heater item name -->
                         <th class="pl-2">
                             <a href="javascript:void(0)" @click="heaterClick(index, heater)">
-                                <v-icon small v-text="(props.type === 'bed') ? 'mdi-radiator' : 'mdi-heat-pump-outline'" />
+                                <v-icon small
+                                        v-text="(props.type === 'bed') ? 'mdi-radiator' : 'mdi-heat-pump-outline'" />
                                 {{ (props.type === "bed") ? $t("panel.tools.bed", [(heaterItems.length === 1) ? "" : index]) : $t("panel.tools.chamber", [(heaterItems.length === 1) ? "" : index]) }}
                             </a>
                         </th>
@@ -84,7 +92,7 @@
                         <!-- Heater name -->
                         <th>
                             <a href="javascript:void(0)" @click="heaterClick(index, heater)"
-                            :class="getHeaterColor(heaterIndex)">
+                               :class="getHeaterColor(heaterIndex)">
                                 {{ getHeaterName(heater, heaterIndex) }}
                             </a>
                             <br>
