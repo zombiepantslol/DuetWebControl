@@ -2,7 +2,6 @@ import type { CancellationToken } from "@duet3d/connectors";
 import ObjectModel, { MessageType, Plugin } from "@duet3d/objectmodel";
 import type JSZip from "jszip";
 import mitt from "mitt";
-import { StoreState } from "pinia";
 
 import { FileTransferItem } from "@/stores/machine";
 
@@ -86,7 +85,7 @@ type Events = {
 	/**
 	 * Object model has been updated
 	 */
-	modelUpdated: StoreState<ObjectModel>;
+	modelUpdated: ObjectModel;
 
 	/**
 	 * Code has been executed

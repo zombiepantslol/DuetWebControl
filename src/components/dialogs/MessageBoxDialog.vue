@@ -80,7 +80,6 @@ import { useSettingsStore } from "@/stores/settings";
 import i18n from "@/i18n";
 import { display, displayZ } from "@/utils/display";
 import { isNumber } from "@/utils/numbers";
-import { StoreState } from "pinia";
 
 const machineStore = useMachineStore(), settingsStore = useSettingsStore();
 
@@ -164,11 +163,11 @@ const canConfirm = computed(() => {
 	return true;
 });
 
-function canMove(axis: StoreState<Axis>): boolean {
+function canMove(axis: Axis): boolean {
 	return axis.homed || !machineStore.model.move.noMovesBeforeHoming;
 }
 
-function displayAxisPosition(axis: StoreState<Axis>): string {
+function displayAxisPosition(axis: Axis): string {
 	if (axis.userPosition === null) {
 		return i18n.global.t("generic.noValue");
 	}
@@ -176,7 +175,7 @@ function displayAxisPosition(axis: StoreState<Axis>): string {
 }
 
 
-function getMoveCode(axis: StoreState<Axis>, index: number, decrementing: boolean): string {
+function getMoveCode(axis: Axis, index: number, decrementing: boolean): string {
 	return `M120\nG91\nG1 ${/[a-z]/.test(axis.letter) ? '\'' : ""}${axis.letter}${decrementing ? '-' : ""}${settingsStore.moveSteps[axis.letter][index]} F${settingsStore.moveFeedrate}\nM121`;
 }
 
