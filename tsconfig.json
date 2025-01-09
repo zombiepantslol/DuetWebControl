@@ -20,7 +20,8 @@
     ],
     "typeRoots": [
       "./node_modules/@types",
-      "./node_modules/vuetify/types"
+      "./node_modules/vuetify/types",
+      "./src/types"
     ],
     "paths": {
       "@/*": [
