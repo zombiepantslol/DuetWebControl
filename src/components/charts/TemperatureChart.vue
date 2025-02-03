@@ -52,6 +52,12 @@ import Events from "@/utils/events";
  */
 const sampleInterval = 1000;
 
+
+/**
+ * Default maximum minimum in case it cannot be determined from the object model (in C)
+ */
+const defaultMinTemperature = 0;
+
 /**
  * Default maximum temperature in case it cannot be determined from the object model (in C)
  */
@@ -186,6 +192,41 @@ export default Vue.extend({
 		darkTheme(): boolean { return store.state.settings.darkTheme; },
 		selectedMachine(): string { return store.state.selectedMachine; },
 		hasTemperaturesToDisplay(): boolean { return store.getters["machine/hasTemperaturesToDisplay"] },
+		minConfiguredTemperature(): number {
+			let minTemperature = 0;
+			for (const bedTemp of store.state.machine.settings.temperatures.bed.active) {
+				if (bedTemp < minTemperature) {
+					minTemperature = bedTemp;
+				}
+			}
+			for (const bedTemp of store.state.machine.settings.temperatures.bed.standby) {
+				if (bedTemp < minTemperature) {
+					minTemperature = bedTemp;
+				}
+			}
+			for (const chamberTemp of store.state.machine.settings.temperatures.chamber) {
+				if (chamberTemp < minTemperature) {
+					minTemperature = chamberTemp;
+				}
+			}
+			for (const chamberTemp of store.state.machine.settings.temperatures.chamber) {
+				if (chamberTemp < minTemperature) {
+					minTemperature = chamberTemp;
+				}
+			}
+			for (const toolTemp of store.state.machine.settings.temperatures.tool.active) {
+				if (toolTemp < minTemperature) {
+					minTemperature = toolTemp;
+				}
+			}
+			for (const toolTemp of store.state.machine.settings.temperatures.tool.standby) {
+				if (toolTemp < minTemperature) {
+					minTemperature = toolTemp;
+				}
+			}
+			return minTemperature;
+		},
+		minHeaterTemperature(): number | null { return store.getters["machine/model/minHeaterTemperature"] },
 		maxHeaterTemperature(): number | null { return store.getters["machine/model/maxHeaterTemperature"] },
 	},
 	data() {
@@ -198,6 +239,7 @@ export default Vue.extend({
 		update() {
 			const now = (new Date()).getTime();
 			if (now - this.lastUpdate >= 1000) {
+				this.chart.config.options!.scales!.yAxes![0].ticks!.min = Math.min(this.minConfiguredTemperature, (this.minHeaterTemperature !== null) ? this.minHeaterTemperature : defaultMinTemperature);
 				this.chart.config.options!.scales!.yAxes![0].ticks!.max = (this.maxHeaterTemperature !== null) ? this.maxHeaterTemperature : defaultMaxTemperature;
 				this.chart.config.options!.scales!.xAxes![0].ticks!.min = (new Date()).getTime() - maxSampleTime;
 				this.chart.config.options!.scales!.xAxes![0].ticks!.max = (new Date()).getTime();

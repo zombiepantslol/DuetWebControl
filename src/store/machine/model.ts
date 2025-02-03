@@ -121,6 +121,15 @@ export default function (connector: BaseConnector | null): MachineModel {
 				}
 				return 0;
 			},
+			minHeaterTemperature(state) {
+				let minTemp: number | null = null;
+				for (const heater of state.heat.heaters) {
+					if (heater !== null && heater.min > -273 && (minTemp === null || heater.min < minTemp)) {
+						minTemp = heater.min;
+					}
+				}
+				return minTemp;
+			},
 			maxHeaterTemperature(state) {
 				let maxTemp: number | null = null;
 				for (const heater of state.heat.heaters) {
