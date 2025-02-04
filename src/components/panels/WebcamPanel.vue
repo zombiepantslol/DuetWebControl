@@ -6,7 +6,8 @@ iframe {
 	overflow: hidden;
 }
 
-img {
+img,
+video {
 	max-width: 100%;
 	max-height: 100%;
 }
@@ -69,96 +70,166 @@ img {
 				<iframe :src="webcam.url" :class="classList"></iframe>
 			</v-responsive>
 
-			<a v-else :href="webcam.liveUrl ? webcam.liveUrl : 'javascript:void(0)'">
-				<img :alt="$t('panel.webcam.alt')" :src="active ? url : ''" :class="classList">
+			<a v-else-if="webcam.enabled" :href="webcam.liveUrl ? webcam.liveUrl : 'javascript:void(0)'">
+				<video v-if="webcamIsRTC" ref="remoteVideo" autoplay playsinline="true" :class="classList"></video>
+				<img v-else :alt="$t('panel.webcam.alt')" :src="active ? url : ''" :class="classList">
 			</a>
 		</v-card-text>
 	</v-card>
 </template>
 
-<script lang="ts">
-import Vue from "vue";
+<script setup lang="ts">
+import { computed, onActivated, onDeactivated, ref, watch } from "vue";
 
 import store from "@/store";
-import { SettingsState, WebcamFlip } from "@/store/settings";
+import { WebcamFlip } from "@/store/settings";
 
-export default Vue.extend({
-	computed: {
-		webcam(): SettingsState["webcam"] { return store.state.settings.webcam; },
-		classList() {
-			const result = [];
+const webcam = computed(() => store.state.settings.webcam);
+const webcamIsRTC = computed(() => webcam.value.url.startsWith("ws:") || webcam.value.url.startsWith("wss:"));
 
-			if (this.webcam.flip === WebcamFlip.X || this.webcam.flip === WebcamFlip.Both) {
-				result.push("flip-x");
-			}
-			if (this.webcam.flip === WebcamFlip.Y || this.webcam.flip === WebcamFlip.Both) {
-				result.push("flip-y");
-			}
+// Lifecycle
+const active = ref(true);
 
-			if (this.webcam.rotation === 90) {
-				result.push("rotate-90");
-			} else if (this.webcam.rotation === 180) {
-				result.push("rotate-180");
-			} else if (this.webcam.rotation === 270) {
-				result.push("rotate-270");
-			}
-
-			return result;
-		}
-	},
-	data() {
-		return {
-			active: true,
-			updateTimer: null as ReturnType<typeof setInterval> | null,
-			url: ""
-		}
-	},
-	activated() {
-		this.active = true;
-	},
-	deactivated() {
-		this.active = false;
-	},
-	methods: {
-		updateWebcam() {
-			let url = this.webcam.url.replace("[HOSTNAME]", store.getters["machine/connector"] ? store.getters["machine/connector"].hostname : location.hostname);
-			if (this.webcam.updateInterval > 0) {
-				if (this.webcam.useFix) {
-					url += "_" + Math.random();
-				} else {
-					if (url.indexOf("?") === -1) {
-						url += "?dummy=" + Math.random();
-					} else {
-						url += "&dummy=" + Math.random();
-					}
-				}
-			}
-			this.url = url;
-		}
-	},
-	mounted() {
-		if (!this.webcam.embedded) {
-			this.updateWebcam();
-			if (this.webcam.updateInterval > 0) {
-				this.updateTimer = setInterval(this.updateWebcam, this.webcam.updateInterval);
-			}
-		}
-	},
-	watch: {
-		webcam: {
-			deep: true,
-			handler() {
-				if (this.webcam.updateInterval === 0) {
-					// For persistent images we need to apply updates independently of the update loop
-					this.updateWebcam();
-				}
-			}
-		}
-	},
-	beforeDestroy() {
-		if (this.updateTimer !== null) {
-			clearInterval(this.updateTimer);
+onActivated(() => {
+	active.value = true;
+	if (!webcam.value.embedded) {
+		update();
+		if (!webcamIsRTC.value && webcam.value.updateInterval > 0) {
+			updateTimer = setInterval(update, webcam.value.updateInterval);
 		}
 	}
+});
+
+onDeactivated(() => {
+	closeWebRTC();
+	if (updateTimer !== null) {
+		clearInterval(updateTimer);
+		updateTimer = null;
+	}
+	active.value = false;
+});
+
+// WebRTC
+const remoteVideo = ref<HTMLVideoElement | null>(null);
+let signalingSocket: WebSocket | null = null, peerConnection: RTCPeerConnection | null = null;
+
+let connectingRTC = false;
+async function connectWebRTC() {
+	// Don't connect if we're already trying to connect
+	if (connectingRTC) {
+		return;
+	}
+	connectingRTC = true;
+
+	// Create RTC peer connection
+	peerConnection = new RTCPeerConnection({
+		//iceServers: [{ urls: "stun:stun.l.google.com:19302" }]
+	});
+
+	if (remoteVideo.value !== null) {
+		const audioTrack = peerConnection!.addTransceiver("audio", { direction: "recvonly" }).receiver.track;
+		const videoTrack = peerConnection!.addTransceiver("video", { direction: "recvonly" }).receiver.track;
+		remoteVideo.value.srcObject = new MediaStream([audioTrack, videoTrack]);
+	}
+
+	// Make signaling socket
+	signalingSocket = new WebSocket(url.value);
+	signalingSocket.onerror = () => {
+		connectingRTC = false;
+	};
+	signalingSocket.onopen = () => {
+		connectingRTC = false;
+
+		peerConnection!.addEventListener("icecandidate", e => {
+			if (e.candidate) {
+				const msg = { type: "webrtc/candidate", value: e.candidate.candidate };
+				signalingSocket!.send(JSON.stringify(msg));
+			}
+		});
+
+		peerConnection!.createOffer().then(offer => peerConnection!.setLocalDescription(offer)).then(() => {
+			const msg = { type: "webrtc/offer", value: peerConnection!.localDescription?.sdp };
+			signalingSocket!.send(JSON.stringify(msg));
+		});
+	}
+	signalingSocket.onmessage = (e) => {
+		const msg = JSON.parse(e.data);
+		if (msg.type === "webrtc/candidate") {
+			peerConnection!.addIceCandidate({ candidate: msg.value, sdpMid: "0" });
+		} else if (msg.type === "webrtc/answer") {
+			peerConnection!.setRemoteDescription({ type: "answer", sdp: msg.value });
+		}
+	}
+}
+
+function closeWebRTC() {
+	if (peerConnection !== null) {
+		peerConnection.close();
+		peerConnection = null;
+	}
+
+	if (signalingSocket !== null) {
+		signalingSocket.close();
+		signalingSocket = null;
+	}
+}
+
+// Update mechanism
+const url = ref("");
+let updateTimer: ReturnType<typeof setInterval> | null = null;
+
+function update() {
+	let urlValue = webcam.value.url.replace("[HOSTNAME]", store.getters["machine/connector"] ? store.getters["machine/connector"].hostname : location.hostname);
+	if (webcamIsRTC.value) {
+		// Kill existing WebRTC connections
+		closeWebRTC();
+
+		// Try to connect again
+		url.value = urlValue;
+		connectWebRTC();
+	} else if (webcam.value.updateInterval > 0) {
+		// Generate webcam URL
+		if (webcam.value.useFix) {
+			urlValue += "_" + Math.random();
+		} else {
+			if (urlValue.indexOf("?") === -1) {
+				urlValue += "?dummy=" + Math.random();
+			} else {
+				urlValue += "&dummy=" + Math.random();
+			}
+		}
+
+		// Apply it
+		url.value = urlValue;
+	}
+}
+
+watch(() => webcam.value, () => {
+	if (webcam.value.updateInterval === 0) {
+		// For persistent images or RTC streams we need to apply updates independently of the update loop
+		update();
+	}
+}, { deep: true });
+
+// Styling
+const classList = computed(() => {
+	const result = [];
+
+	if (webcam.value.flip === WebcamFlip.X || webcam.value.flip === WebcamFlip.Both) {
+		result.push("flip-x");
+	}
+	if (webcam.value.flip === WebcamFlip.Y || webcam.value.flip === WebcamFlip.Both) {
+		result.push("flip-y");
+	}
+
+	if (webcam.value.rotation === 90) {
+		result.push("rotate-90");
+	} else if (webcam.value.rotation === 180) {
+		result.push("rotate-180");
+	} else if (webcam.value.rotation === 270) {
+		result.push("rotate-270");
+	}
+
+	return result;
 });
 </script>
